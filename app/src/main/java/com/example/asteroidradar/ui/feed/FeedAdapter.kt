@@ -107,6 +107,7 @@ class FeedAdapter(
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = HeaderBinding.inflate(layoutInflater, parent, false)
                 binding.image = image.value
+                binding.nasaImage.contentDescription = image.value?.title
                 return ImageViewHolder(binding)
             }
         }

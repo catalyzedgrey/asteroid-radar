@@ -8,7 +8,7 @@ import androidx.room.Query
 
 @Dao
 interface AsteroidDao {
-    @Query("select * from asteroid_database")
+    @Query("select * from asteroid_database ORDER BY close_approach_date ASC")
     fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
 
 
