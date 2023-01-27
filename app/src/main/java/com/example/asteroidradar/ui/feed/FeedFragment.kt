@@ -24,7 +24,8 @@ class FeedFragment : Fragment() {
     ): View {
 
         binding = FragmentFeedBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this)[FeedViewModel::class.java]
+        val viewModelFactory = FeedViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[FeedViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -36,7 +37,7 @@ class FeedFragment : Fragment() {
             }
         )
 
-        viewModel.navigateToSelectedAsteroid.observe(viewLifecycleOwner){asteroid->
+        viewModel.navigateToSelectedAsteroid.observe(viewLifecycleOwner) { asteroid ->
             asteroid?.let {
                 this.findNavController()
                     .navigate(FeedFragmentDirections.actionFeedFragmentToDetailFragment(it))

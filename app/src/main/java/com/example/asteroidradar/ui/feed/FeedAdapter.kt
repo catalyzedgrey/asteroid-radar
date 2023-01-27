@@ -78,7 +78,7 @@ class FeedAdapter(
     }
 
     class clickListener(val clickListener: (asteroid: Asteroid) -> Unit) {
-        fun onClick(marsProperty: Asteroid) = clickListener(marsProperty)
+        fun onClick(asteroid: Asteroid) = clickListener(asteroid)
     }
 
     class AsteroidViewHolder(private var binding: AsteroidListItemBinding) :
