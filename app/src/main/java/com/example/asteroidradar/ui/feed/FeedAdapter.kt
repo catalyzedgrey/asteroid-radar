@@ -20,14 +20,13 @@ private val ITEM_VIEW_TYPE_ITEM = 1
 
 private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-class FeedAdapter(val pictureOfDay: LiveData<PictureOfDay>) :
+class FeedAdapter(
+    val pictureOfDay: LiveData<PictureOfDay>,
+    private val onClickListener: clickListener
+) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
 
-    private lateinit var headerBinding:HeaderBinding
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        headerBinding = HeaderBinding.inflate(layoutInflater, parent, false)
         return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> ImageViewHolder.from(parent, pictureOfDay)
             ITEM_VIEW_TYPE_ITEM -> AsteroidViewHolder.from(parent)
@@ -46,9 +45,9 @@ class FeedAdapter(val pictureOfDay: LiveData<PictureOfDay>) :
         when (holder) {
             is AsteroidViewHolder -> {
                 val asteroid = getItem(position) as DataItem.AsteroidItem
-//        holder.itemView.setOnClickListener {
-//            onClickListener.onClick(marsProperty)
-//        }
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(asteroid.asteroid)
+                }
                 holder.bind(asteroid)
 
             }
@@ -76,6 +75,10 @@ class FeedAdapter(val pictureOfDay: LiveData<PictureOfDay>) :
         override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem.id == newItem.id
         }
+    }
+
+    class clickListener(val clickListener: (asteroid: Asteroid) -> Unit) {
+        fun onClick(marsProperty: Asteroid) = clickListener(marsProperty)
     }
 
     class AsteroidViewHolder(private var binding: AsteroidListItemBinding) :

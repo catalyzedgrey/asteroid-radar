@@ -14,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:padding="@dimen/default_padding">
 
         <TextView
@@ -21,15 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.codename}"
+            android:textColor="@color/text_grey"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="68347 (2001 KB67" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/asteroid_approach_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.closeApproachDate}"
+            android:textColor="@color/text_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/asteroid_title"
             tools:text="2020-02-08" />

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.asteroidradar.databinding.FragmentFeedBinding
 
 class FeedFragment : Fragment() {
@@ -27,7 +28,21 @@ class FeedFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = FeedAdapter(viewModel.pictureOfDay)
+        val adapter = FeedAdapter(
+            viewModel.pictureOfDay,
+            FeedAdapter.clickListener {
+                viewModel.displayAsteroidDetails(it)
+                viewModel.displayAsteroidDetailsComplete()
+            }
+        )
+
+        viewModel.navigateToSelectedAsteroid.observe(viewLifecycleOwner){asteroid->
+            asteroid?.let {
+                this.findNavController()
+                    .navigate(FeedFragmentDirections.actionFeedFragmentToDetailFragment(it))
+            }
+        }
+
         binding.asteroidList.adapter = adapter
         adapter.addHeaderAndSubmitList(viewModel.asteroids.value)
 
