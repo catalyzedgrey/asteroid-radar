@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="image"
+            type="com.example.asteroidradar.domain.models.PictureOfDay" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/nasa_image"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            app:imageUrl="@{image}"
+        />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>
