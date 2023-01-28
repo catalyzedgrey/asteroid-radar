@@ -71,9 +71,21 @@ fun getToday(): String {
     return formatDate(calendar.time)
 }
 
+fun getTomorrow(): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DAY_OF_YEAR, 1)
+    return formatDate(calendar.time)
+}
+
 fun getSeventhDay(): String {
     val calendar = Calendar.getInstance()
     calendar.add(Calendar.DAY_OF_YEAR, 7)
+    return formatDate(calendar.time)
+}
+
+fun getEigthDay(): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DAY_OF_YEAR, 8)
     return formatDate(calendar.time)
 }
 
