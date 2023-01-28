@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.asteroidradar.domain.models.Asteroid
 
 
-@Database(entities = [AsteroidEntity::class], version = 1, exportSchema = false)
+@Database(entities = [AsteroidEntity::class], version = 3, exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 
