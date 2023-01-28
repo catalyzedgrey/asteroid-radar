@@ -1,7 +1,5 @@
 package com.example.asteroidradar.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.example.asteroidradar.database.AsteroidDatabase
 import com.example.asteroidradar.database.AsteroidEntity
 import com.example.asteroidradar.domain.models.Asteroid
@@ -15,13 +13,7 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
-
-    val asteroidList: LiveData<List<Asteroid>> =
-        Transformations.map(database.asteroidDao.getAllAsteroids()) {
-            it.asDomainModel()
-        }
-
-    suspend fun getAsteroids(
+    suspend fun refreshAsteroids(
         startDate: String = getToday(),
         endDate: String = getSeventhDay()
     ) {
@@ -32,6 +24,33 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
             )
             val asteroidsList = parseAsteroidsJsonResult(JSONObject(asteroidResponseBody.string()))
             database.asteroidDao.insertAll(*asteroidsList.asDatabaseModel())
+        }
+    }
+
+    suspend fun getAllAsteroids(): List<Asteroid> {
+        return withContext(Dispatchers.IO) {
+            database.asteroidDao.getAllAsteroids(getToday()).asDomainModel()
+        }
+    }
+
+    suspend fun getAsteroidsByDate(
+        startDate: String = getToday(),
+        endDate: String = getSeventhDay()
+    ): List<Asteroid> {
+        return withContext(Dispatchers.IO) {
+            database.asteroidDao.getWeekAsteroids(
+                startDate,
+                endDate
+            ).asDomainModel()
+        }
+    }
+
+    suspend fun getAsteroidToday(
+    ): List<Asteroid> {
+        return withContext(Dispatchers.IO) {
+            database.asteroidDao.getTodaysAsteroid(
+                date = getToday()
+            ).asDomainModel()
         }
     }
 }

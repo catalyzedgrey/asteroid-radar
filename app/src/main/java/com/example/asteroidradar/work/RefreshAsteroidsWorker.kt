@@ -9,13 +9,16 @@ import retrofit2.HttpException
 
 class RefreshAsteroidsWorker(appContext: Context, params: WorkerParameters) :
     CoroutineWorker(appContext, params) {
+    companion object {
+        const val WORK_NAME = "RefreshAsteroidsWorker"
+    }
 
     override suspend fun doWork(): Result {
         val database = AsteroidDatabase.getInstance(context = applicationContext)
         val repository = AsteroidRepository(database)
 
         return try {
-            repository.getAsteroids()
+            repository.refreshAsteroids()
             Result.success()
         } catch (exception: HttpException) {
             return Result.retry()

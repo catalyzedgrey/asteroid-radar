@@ -32,20 +32,28 @@ fun bindImage(imgView: ImageView, img: PictureOfDay?) {
 
 @BindingAdapter("setStatus")
 fun bindStatus(imgView: ImageView, isPotentiallyHazardous: Boolean) {
-    imgView.setImageResource(
-        if (isPotentiallyHazardous)
-            R.drawable.ic_status_potentially_hazardous
-        else
-            R.drawable.ic_status_normal
-    )
+    imgView.apply {
+        if (isPotentiallyHazardous) {
+            setImageResource(R.drawable.ic_status_potentially_hazardous)
+            contentDescription = context.getString(R.string.potentially_hazardous_status)
+        } else {
+            setImageResource(R.drawable.ic_status_normal)
+            contentDescription = context.getString(R.string.safe_status)
+        }
+    }
+
 }
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.asteroid_hazardous)
-    } else {
-        imageView.setImageResource(R.drawable.asteroid_safe)
+    imageView.apply {
+        if (isHazardous) {
+            imageView.setImageResource(R.drawable.asteroid_hazardous)
+            contentDescription = context.getString(R.string.potentially_hazardous_asteroid_image)
+        } else {
+            imageView.setImageResource(R.drawable.asteroid_safe)
+            contentDescription = context.getString(R.string.not_hazardous_asteroid_image)
+        }
     }
 }
 
