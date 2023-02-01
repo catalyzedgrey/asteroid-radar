@@ -17,9 +17,9 @@ interface AsteroidDao {
         date: String,
     ): List<AsteroidEntity>
 
-    //I didnt use te between operator here because we didnt want to indlude today's date.
+    //I didnt use te between operator here because we didnt want to include today's date.
     // We can just change the start date but i thought this would do just as well
-    @Query("SELECT * FROM asteroid_table WHERE closeApproachDate > :startDate AND closeApproachDate < :endDate ORDER BY closeApproachDate ASC")
+    @Query("SELECT * FROM asteroid_table WHERE closeApproachDate > :startDate AND closeApproachDate <= :endDate ORDER BY closeApproachDate ASC")
     suspend fun getWeekAsteroids(
         startDate: String,
         endDate: String
